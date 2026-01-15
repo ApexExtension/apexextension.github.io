@@ -1,32 +1,62 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Online - No Download</title>
     <style>
-        body { background: #111; color: white; text-align: center; font-family: sans-serif; padding: 50px; }
-        .box { border: 2px solid #444; padding: 30px; border-radius: 15px; display: inline-block; }
-        .btn { 
-            background: #ff3131; color: white; padding: 20px 40px; 
-            text-decoration: none; font-size: 24px; font-weight: bold;
-            border-radius: 10px; display: block; margin-top: 20px;
+        body {
+            margin: 0;
+            background-color: #111;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .btn:hover { background: #ff5c5c; }
-        iframe { width: 1px; height: 1px; visibility: hidden; } /* Hidden tester */
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
+        .game-wrapper {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            aspect-ratio: 16 / 9;
+            border: 5px solid #333;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+        }
     </style>
 </head>
 <body>
 
-    <div class="box">
-        <h1>Roblox Online Launcher</h1>
-        <p>If the game is blocked, use the button below:</p>
-        
-        <a href="https://www.easyfun.gg/games/roblox.html" target="_blank" class="btn">
-            LAUNCH GAME NOW
-        </a>
-        
-        <p style="font-size: 12px; color: #777; margin-top: 20px;">
-            Tip: If it still won't load, try turning off your VPN or Ad-Blocker.
-        </p>
+    <div class="header">
+        <h1>Roblox Cloud Player</h1>
+        <p>Powered by Easyfun Technology</p>
+    </div>
+
+    <div class="game-wrapper">
+        <iframe 
+            src="https://www.easyfun.gg/games/roblox.html" 
+            allow="autoplay; fullscreen; keyboard"
+            scrolling="no">
+        </iframe>
+    </div>
+
+    <div class="footer">
+        Note: This uses cloud streaming. A fast internet connection is recommended.
     </div>
 
 </body>
