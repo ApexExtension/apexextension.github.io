@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SoleminerCloud</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoleminerCloud | Premium Cloud Gaming</title>
     <style>
-        /* Removes all margins and scrollbars for a full-screen app feel */
+        /* Modern Gaming Aesthetic */
+        :root {
+            --primary: #00ff88; /* Neon Green */
+            --bg-dark: #0a0a0c;
+            --card-bg: #16161a;
+            --text-gray: #a0a0a8;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,67 +22,144 @@
         body, html {
             width: 100%;
             height: 100%;
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             overflow: hidden;
-            background-color: #000;
-            font-family: 'Segoe UI', sans-serif;
         }
 
-        /* Container that forces the iframe to fill the entire window */
-        .viewport-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 1;
+        /* Top Navigation Bar */
+        .navbar {
+            height: 60px;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            border-bottom: 2px solid #222;
+            z-index: 10;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        .status-tag {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid var(--primary);
+        }
+
+        /* The Game Area */
+        .main-viewport {
+            position: relative;
+            height: calc(100vh - 60px); /* Fill space below navbar */
+            width: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         iframe {
             width: 100%;
             height: 100%;
             border: none;
-            display: block;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
-        /* Small status indicator (Hidden by default, shows on hover) */
-        .info-overlay {
+        /* Glowing Loader Overlay */
+        #loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            transition: opacity 1s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #222;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Panic Key Reminder */
+        .panic-hint {
             position: fixed;
-            top: 5px;
-            right: 10px;
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 10px;
-            z-index: 100;
+            bottom: 15px;
+            right: 20px;
+            color: var(--text-gray);
+            font-size: 11px;
+            background: rgba(0,0,0,0.5);
+            padding: 5px 10px;
+            border-radius: 4px;
+            z-index: 20;
             pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="info-overlay">SoleminerCloud | Panic: 7</div>
+    <nav class="navbar">
+        <div class="logo-text">SoleminerCloud</div>
+        <div class="status-tag">SERVER: ONLINE</div>
+    </nav>
 
-    <div class="viewport-container">
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>Connecting to Cloud Instance...</p>
+    </div>
+
+    <main class="main-viewport">
         <iframe 
+            id="cloud-frame"
             src="https://web.cloudmoonapp.com/" 
             allow="autoplay; fullscreen; keyboard"
             sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
         </iframe>
-    </div>
+    </main>
+
+    <div class="panic-hint">Panic Key: [7]</div>
 
     <script>
-        /**
-         * PANIC BUTTON TRIGGER
-         * Instantly redirects the current tab to Google Classroom 
-         * when the number "7" key is pressed.
-         */
+        // PANIC BUTTON
         document.addEventListener('keydown', function(event) {
-            // Check if the pressed key is the number 7
             if (event.key === "7") {
+                // Redirects to a safe school/work page
                 window.location.replace("https://classroom.google.com");
             }
         });
 
-        // Ensure the window has focus to detect the keypress
-        window.focus();
+        // HIDE LOADER
+        // We hide the loading screen after 5 seconds to give the frame time to start
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1000);
+            }, 5000);
+        };
     </script>
 </body>
 </html>
+        
