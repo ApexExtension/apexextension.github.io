@@ -5,117 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SoleminerCloud | Premium Cloud Gaming</title>
     <style>
-        /* Modern Gaming Aesthetic */
         :root {
-            --primary: #00ff88; /* Neon Green */
+            --primary: #00ff88;
             --bg-dark: #0a0a0c;
             --card-bg: #16161a;
             --text-gray: #a0a0a8;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body, html {
             width: 100%;
             height: 100%;
             background-color: var(--bg-dark);
             color: white;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             overflow: hidden;
         }
 
-        /* Top Navigation Bar */
         .navbar {
-            height: 60px;
+            height: 50px;
             background: var(--card-bg);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 30px;
+            padding: 0 20px;
             border-bottom: 2px solid #222;
             z-index: 10;
         }
 
         .logo-text {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 800;
             letter-spacing: 2px;
             color: var(--primary);
             text-transform: uppercase;
         }
 
-        .status-tag {
-            background: rgba(0, 255, 136, 0.1);
-            color: var(--primary);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            border: 1px solid var(--primary);
-        }
-
-        /* The Game Area */
         .main-viewport {
             position: relative;
-            height: calc(100vh - 60px); /* Fill space below navbar */
+            height: calc(100vh - 50px);
             width: 100%;
             background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         iframe {
             width: 100%;
             height: 100%;
             border: none;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
-        /* Glowing Loader Overlay */
         #loader {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-dark);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 5;
-            transition: opacity 1s ease;
+            transition: opacity 0.8s ease;
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #222;
-            border-top: 5px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            border: 4px solid #222;
+            border-top: 4px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Panic Key Reminder */
         .panic-hint {
             position: fixed;
-            bottom: 15px;
-            right: 20px;
+            bottom: 10px;
+            right: 15px;
             color: var(--text-gray);
-            font-size: 11px;
-            background: rgba(0,0,0,0.5);
-            padding: 5px 10px;
+            font-size: 10px;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 8px;
             border-radius: 4px;
             z-index: 20;
-            pointer-events: none;
         }
     </style>
 </head>
@@ -123,12 +96,12 @@
 
     <nav class="navbar">
         <div class="logo-text">SoleminerCloud</div>
-        <div class="status-tag">SERVER: ONLINE</div>
+        <div style="font-size: 10px; color: var(--text-gray);">SECURE CONNECTION ESTABLISHED</div>
     </nav>
 
     <div id="loader">
         <div class="spinner"></div>
-        <p>Connecting to Cloud Instance...</p>
+        <p style="letter-spacing: 1px; font-size: 13px;">INITIALIZING CLOUD...</p>
     </div>
 
     <main class="main-viewport">
@@ -140,26 +113,38 @@
         </iframe>
     </main>
 
-    <div class="panic-hint">Panic Key: [7]</div>
+    <div class="panic-hint">Emergency: Press [7]</div>
 
     <script>
-        // PANIC BUTTON
+        // 1. PANIC REDIRECT (to Satchel One)
+        function triggerPanic() {
+            window.location.replace("https://www.satchelone.com/login");
+        }
+
+        // 2. LISTEN FOR KEYPRESS
         document.addEventListener('keydown', function(event) {
             if (event.key === "7") {
-                // Redirects to a safe school/work page
-                window.location.replace("https://classroom.google.com");
+                triggerPanic();
             }
         });
 
-        // HIDE LOADER
-        // We hide the loading screen after 5 seconds to give the frame time to start
+        // 3. THE FIX: RE-FOCUS SCRIPT
+        // This ensures the "7" key works even if you are clicking inside the game.
+        setInterval(function() {
+            if (document.activeElement.tagName === "IFRAME") {
+                // We briefly take focus away from the game so the site can "hear" the 7 key
+                window.focus();
+            }
+        }, 1000);
+
+        // 4. LOADER TIMEOUT
         window.onload = function() {
             setTimeout(function() {
-                document.getElementById('loader').style.opacity = '0';
-                setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1000);
-            }, 5000);
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 800);
+            }, 4000);
         };
     </script>
 </body>
 </html>
-        
